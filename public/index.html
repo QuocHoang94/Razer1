@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <!-- <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    /> -->
+    <meta name="theme-color" content="#000000" />
+    <!--
+manifest.json provides metadata used when your web app is installed on a
+user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+-->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+Notice the use of %PUBLIC_URL% in the tags above.
+It will be replaced with the URL of the `public` folder during the build.
+Only files inside the `public` folder can be referenced from the HTML.
+
+Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+work correctly both with client-side routing and a non-root public URL.
+Learn how to configure a non-root public URL by running `npm run build`.
+-->
+
+    <!--INCLUDE CSS FILE-->
+
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/fonts/roboto.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/fonts/razerf5.css"
+    />
+
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/css/main.css"
+    />
+
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/css/nav.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/css/dropdown.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/css/switch.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/css/slider.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/css/checkbox.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/css/tooltip.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/css/profile-bar.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="%PUBLIC_URL%/assets/css/body-widgets.css"
+    />
+
+    <style type="text/css">
+      .h2-title .switch {
+        position: relative;
+        top: 3px;
+        left: 10px;
+      }
+      #micEnhance .slider-container {
+        width: 490px;
+        margin-left: 30px;
+        height: 0;
+        opacity: 0;
+        overflow: hidden;
+
+        will-change: height, opacity;
+        transition: height 0.3s, opacity 0.3s;
+      }
+      #micEnhance .slider-container.on {
+        height: 64px;
+        opacity: 1;
+        overflow: unset;
+        margin-bottom: 20px;
+      }
+    </style>
+
+    <title>React App</title>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="main-container"></div>
+    <!--
+This HTML file is a template.
+If you open it directly in the browser, you will see an empty page.
+
+You can add webfonts, meta tags, or analytics to this file.
+The build step will place the bundled scripts into the <body> tag.
+
+To begin the development, run `npm start` or `yarn start`.
+To create a production bundle, use `npm run build` or `yarn build`.
+-->
+
+    <!--INCLIDE JS FILE-->
+
+    <script
+      type="text/javascript"
+      src="%PUBLIC_URL%/assets/js/main.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="%PUBLIC_URL%/assets/js/switch.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="%PUBLIC_URL%/assets/js/slider.js"
+    ></script>
+
+    <!-- local js -->
+    <script type="text/javascript">
+      function init() {
+        var mouseIsDown = false;
+
+        // const pf = new Dropdown('profileDrop');
+
+        const switchSet = [
+          { id: 'swPhone', target: 'slPhone', toggle: 'on' },
+          { id: 'swSensi', target: 'slSensi', toggle: 'on' },
+          { id: 'swSide', target: 'slSide', toggle: 'on' },
+        ];
+
+        var sw = [];
+
+        for (var i = 0; i < switchSet.length; i++) {
+          sw[i] = new Switch(
+            switchSet[i].id,
+            switchSet[i].target,
+            switchSet[i].toggle
+          );
+        }
+
+        const slider1 = new Slider('slPhone');
+        const slider2 = new Slider('slSensi');
+
+        const slider3 = new Slider('slSide', '0', '100');
+
+        const slider4 = new Slider('slNorm');
+        const slider5 = new Slider('slAmb');
+        // const slider6 = new Slider('slClarity');
+
+        for (var i = 0; i < switchSet.length; i++) {
+          let obj = sw[i];
+          obj.switchDom.addEventListener('click', function() {
+            obj.handleClick();
+          });
+        }
+
+        
+        window.onmousedown = function(e) {
+          mouseIsDown = true;
+          // pf.handleDropdown(e);
+        };
+        window.onmousemove = function(e) {
+          slider1.handleMouseMove();
+          slider2.handleMouseMove();
+          slider3.handleMouseMove();
+          slider4.handleMouseMove();
+          slider5.handleMouseMove();
+          // slider6.handleMouseMove();
+        };
+        window.onmouseup = function(e) {
+          mouseIsDown = false;
+        };
+
+        document
+          .getElementById('checkNorm')
+          .addEventListener('click', function(e) {
+            slider4.containerDom.classList.toggle('on');
+            slider4.sliderDom.disabled = false;
+          });
+        document
+          .getElementById('checkAmb')
+          .addEventListener('click', function(e) {
+            slider5.containerDom.classList.toggle('on');
+            slider5.sliderDom.disabled = false;
+          });
+        // document
+        //   .getElementById('checkClarity')
+        //   .addEventListener('click', function(e) {
+        //     slider6.containerDom.classList.toggle('on');
+        //     slider6.sliderDom.disabled = false;
+        //   });
+      }
+    </script>
+  </body>
+</html>
